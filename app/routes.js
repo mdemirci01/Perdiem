@@ -27,6 +27,7 @@ module.exports = function (app) {
         // create a post, information comes from AJAX request from Angular
         Post.create({
             text: req.body.text,
+            createDate: new Date(),
             done: false
         }, function (err, post) {
             if (err)

@@ -16,6 +16,8 @@
 		body 					{ padding-top:70px; }
 		#post-list 				{ margin-bottom:30px; }
 		#post-form 	 			{ margin-bottom:50px; }
+		textarea.ng-invalid {border-color:red}
+		textarea.ng-valid {border-color:gray;}
 	</style>
 
 	<!-- SPELLS -->
@@ -67,11 +69,12 @@
 				<!-- FORM TO CREATE POSTS -->
 					<div id="post-form" class="row">
 							
-								<form>
+								<form name="postForm">
 									<div class="form-group">
 				
 										<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-										<textarea class="form-control" placeholder="Bugün ne düşünüyorsun?" ng-model="formData.text"></textarea>
+										<textarea name="postText" class="form-control" placeholder="Bugün ne düşünüyorsun?" ng-model="formData.text" ng-maxlength="10"></textarea>
+										<div ng-show="postForm.postText.$error.maxlength" class="text-danger pull-left">Metin 1000 karakterden uzun olamaz.</div>
 									</div>
 				
 									<!-- createPost() WILL CREATE NEW POSTS -->
@@ -86,7 +89,7 @@
 				
 
 				<!-- LOOP OVER THE POSTS IN $scope.posts -->
-				<div class="panel panel-default" ng-repeat="post in posts">
+				<div class="panel panel-default" ng-repeat="post in posts | orderBy:'-createDate'">
 					<div class="panel-body">
 							<span uib-dropdown on-toggle="toggled(open)" class="pull-right">
 									<a href id="simple-dropdown" uib-dropdown-toggle>
